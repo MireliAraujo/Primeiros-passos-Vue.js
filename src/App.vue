@@ -20,11 +20,14 @@ const gostaDaMMaravilha = false
 const estaAutorizado = false
 
 //let contador = 0
+
 const estado = reactive({
     contador: 0,
     email: '',
     saldo: 5000,
     transferindo: 0,
+    nomes:  ['gian', 'paulo', 'luiz', 'monica'],
+    nomeAInserir: '',
 
 })
 function incrementar() {
@@ -49,11 +52,22 @@ function validaValorTransferencia() {
     return saldo >= transferindo;
 }
 
+
+function cadastrarnome(){
+    if(estado.nomeAInserir.length >= 3){
+        estado.nomes.push(estado.nomeAInserir)
+    } else{
+        alert("digite mais caracteries")
+    }
+}
+
+
 </script>
 
 
 <template>
-    <h1>{{ dizOla("paula") }}</h1>
+    
+        <h1>{{ dizOla("paula") }}</h1>
     <img v-if="gostaDaMarvel" :src="fotoCaptaMatvel">
     <img v-else-if="gostaDaMMaravilha" :src="fotoMMaravilha">
     <h2 v-else>Não curte heróis</h2>
@@ -86,9 +100,24 @@ function validaValorTransferencia() {
     <button v-if="validaValorTransferencia()">Transferir</button>
     <span v-else>Valor maior que o saldo</span>
 
+    <br>
+    <hr>
+
+
+    
+
+    <ul>
+        <li v-for="nome in estado.nomes">
+            {{ nome }}
+        </li>
+    </ul>
+    <input @keyup='evento => estado.nomeAInserir = evento.target.value' type="text" placeholder="digite um novo nome">
+    <button @click="cadastrarnome" type="button">Cadastrar</button>
+
 </template>
 
 <style scoped>
+
 img{
     max-width: 200px;
 }
@@ -97,4 +126,5 @@ img{
     outline-color: red;
     border-color: red;
 }
+
 </style>
